@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import Top from './components/top/top';
+import tw from 'twin.macro';
+import Bottom from './components/bottom/Bottom';
+import Middle from './components/middle/Middle';
+
+const AppContainer = tw.div`
+  flex
+  flex-col
+  w-full
+  h-full
+  overflow-hidden
+`;
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	return (
+		<AppContainer>
+			<Top />
+			<Middle />
+			<Bottom />
+		</AppContainer>
+	);
 }
 
 export default App;
