@@ -5,36 +5,47 @@ import {
 	ViewMoreButtonUp,
 	ViewMoreButtonDown,
 	ViewMoreTopButtonDown,
+	ViewMoreContactUsButtonUp,
+	ViewMoreExploreButtonDown,
 } from '../../styles/reusable/ArrowButton.Styled';
 
 function ArrowButton({ whoAmI, direction, section }) {
 	const chooseArrow = () => {
-		if (!whoAmI) {
-			if (direction === 'down') {
+		switch (whoAmI) {
+			case 'Home':
 				return (
-					<ViewMoreButtonDown>
+					<ViewMoreTopButtonDown>
 						<Link to={section} smooth={'easeInOutQuad'} duration={1000}>
 							<BsArrowDownCircle />
 						</Link>
-					</ViewMoreButtonDown>
+					</ViewMoreTopButtonDown>
 				);
-			} else {
+			case 'Explore':
+				if (direction === 'up') {
+					return (
+						<ViewMoreButtonUp>
+							<Link to={section} smooth={'easeInOutQuad'} duration={1000}>
+								<BsArrowUpCircle />
+							</Link>
+						</ViewMoreButtonUp>
+					);
+				} else {
+					return (
+						<ViewMoreExploreButtonDown>
+							<Link to={section} smooth={'easeInOutQuad'} duration={1000}>
+								<BsArrowDownCircle />
+							</Link>
+						</ViewMoreExploreButtonDown>
+					);
+				}
+			case 'ContactUs':
 				return (
-					<ViewMoreButtonUp>
+					<ViewMoreContactUsButtonUp>
 						<Link to={section} smooth={'easeInOutQuad'} duration={1000}>
 							<BsArrowUpCircle />
 						</Link>
-					</ViewMoreButtonUp>
+					</ViewMoreContactUsButtonUp>
 				);
-			}
-		} else {
-			return (
-				<ViewMoreTopButtonDown>
-					<Link to={section} smooth={'easeInOutQuad'} duration={1000}>
-						<BsArrowDownCircle />
-					</Link>
-				</ViewMoreTopButtonDown>
-			);
 		}
 	};
 	return chooseArrow();

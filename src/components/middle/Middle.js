@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 // Style:
 import {
-	BottomContainer,
+	MiddleContainer,
 	LandingSection,
 	InnerPanel,
 	RightSector,
@@ -59,9 +59,9 @@ function Middle() {
 	};
 
 	return (
-		<BottomContainer name='Explore'>
+		<MiddleContainer name='Explore'>
 			<LandingSection>
-				<ArrowButton direction={'up'} section={'Explore'} />
+				<ArrowButton direction={'up'} section={'Home'} whoAmI={'Explore'} />
 				<LeftSector>
 					<Inputs>
 						<SelectInput
@@ -85,9 +85,13 @@ function Middle() {
 					<CarouselWraper>
 						<ResponsiveCarousel images={images} />
 					</CarouselWraper>
-					{/* <Inputs>
-						<ArrowButton direction={'down'} section={'ContactUs'} />
-					</Inputs> */}
+					<Inputs>
+						<ArrowButton
+							direction={'down'}
+							section={'ContactUs'}
+							whoAmI={'Explore'}
+						/>
+					</Inputs>
 				</LeftSector>
 				<RightSector>
 					<InnerPanel>
@@ -106,7 +110,7 @@ function Middle() {
 					</InnerPanel>
 				</RightSector>
 			</LandingSection>
-		</BottomContainer>
+		</MiddleContainer>
 	);
 }
 

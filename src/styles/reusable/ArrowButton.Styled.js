@@ -15,6 +15,33 @@ export const ViewMoreTopButtonDown = styled.button`
 `};
 `;
 
+export const ViewMoreContactUsButtonUp = styled.button`
+	${tw`
+    absolute
+    left-1/2
+    mt-4
+    -translate-x-1/2
+    text-white
+    text-4xl
+    transition-colors
+    duration-200
+    hover:text-green-400
+`};
+`;
+
+export const ViewMoreExploreButtonDown = styled.button`
+	${tw`
+    absolute
+    left-2
+    mb-4
+    -translate-x-1/2
+    text-white
+    text-4xl
+    transition-colors
+    duration-200
+    hover:text-green-400
+`};
+`;
 export const ViewMoreButtonDown = styled.button`
 	${tw`
     absolute

@@ -4,9 +4,9 @@ import styled from 'styled-components';
 import { Element } from 'react-scroll';
 
 // background image:
-import BackgroundImage from '../../images/bg3.jpg';
+import BackgroundImage from '../../images/bg2.jpg';
 
-export const BottomContainer = styled.div`
+export const MiddleContainer = styled.div`
 	${tw(Element)`
         w-full
         h-screen
@@ -33,6 +33,7 @@ export const LandingSection = styled.div`
 	background-size: cover;
 	background-position: bottom 10% left;
 	background-blend-mode: overlay;
+	background-attachment: fixed;
 `;
 
 export const LeftSector = styled.div`
