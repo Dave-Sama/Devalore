@@ -14,7 +14,7 @@ function ResponsiveCarousel({ images }) {
 	return (
 		<ExploreSectionWrapper>
 			<Carousel dynamicHeight={false}>
-				{images.slice(0, 10).map((image, index) => (
+				{images.slice(0, 7).map((image, index) => (
 					<Item key={index}>
 						<img src={image.webformatURL} />
 						<Description>{image.user}</Description>

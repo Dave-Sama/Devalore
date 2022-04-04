@@ -33,7 +33,7 @@ export const ViewMoreExploreButtonDown = styled.button`
 	${tw`
     absolute
     left-2
-    mb-4
+    mt-10
     -translate-x-1/2
     text-white
     text-4xl
@@ -60,7 +60,7 @@ export const ViewMoreButtonUp = styled.button`
 	${tw`
     absolute
     left-2
-    mt-2
+    mt-10
     -translate-x-1/2
     text-white
     text-4xl

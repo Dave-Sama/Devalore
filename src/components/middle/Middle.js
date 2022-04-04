@@ -29,12 +29,16 @@ import { country_list } from '../../countries';
 
 // apis:
 import _ from 'lodash';
+import Axios from 'axios';
+import LoadingIcons from 'react-loading-icons';
 
 function Middle() {
 	const [search, setSearch] = useState('');
+	const [date, setDate] = useState(new Date());
 	const [images, setImages] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [isCountryExist, setIsCountryExist] = useState(false);
+	const [isDateExists, setIsDateExist] = useState(false);
 	const [isUp, setIsUp] = useState(false);
 
 	useEffect(() => {
@@ -52,10 +56,16 @@ function Middle() {
 				.catch((err) => console.log(err));
 	}, [search]);
 
-	const sumbitCountry = (e) => {
+	const onCountryCange = (e) => {
 		e.preventDefault();
 		setSearch(e.target.value);
 		setIsCountryExist(true);
+	};
+
+	const onDateChange = (e) => {
+		e.preventDefault();
+		setDate(e.target.value);
+		setIsDateExist(true);
 	};
 
 	return (
@@ -65,7 +75,7 @@ function Middle() {
 				<LeftSector>
 					<Inputs>
 						<SelectInput
-							onChange={sumbitCountry}
+							onChange={onCountryCange}
 							name='countries'
 							id='countries'
 						>
@@ -75,16 +85,24 @@ function Middle() {
 								</OptionSelect>
 							))}
 						</SelectInput>
-						<Label for='date'>Date:</Label>
-						{!isCountryExist ? (
-							<DateInput disabled type='date' id='date' name='date' />
-						) : (
-							<DateInput type='date' id='date' name='date' />
-						)}
+						{
+							<DateInput
+								type='date'
+								id='date'
+								name='date'
+								onChange={onDateChange}
+							/>
+						}
 					</Inputs>
-					<CarouselWraper>
-						<ResponsiveCarousel images={images} />
-					</CarouselWraper>
+					{isCountryExist ? (
+						<CarouselWraper>
+							<ResponsiveCarousel images={images} />
+						</CarouselWraper>
+					) : (
+						<CarouselWraper>
+							<LoadingIcons.Circles className='m-auto' />
+						</CarouselWraper>
+					)}
 					<Inputs>
 						<ArrowButton
 							direction={'down'}
@@ -98,14 +116,21 @@ function Middle() {
 						{!isLoading && images.length === 0 && (
 							<NotFound>No Images Found...</NotFound>
 						)}
-						{isLoading ? (
-							<Loading>Loading...</Loading>
-						) : (
+						{isCountryExist && isDateExists ? (
 							<ImagedContainer>
-								{images.map((image, index) => (
-									<ImageCard key={index} image={image} />
+								{images.slice(0, 12).map((image, index) => (
+									<ImageCard
+										key={index}
+										image={image}
+										name={search}
+										date={date}
+									/>
 								))}
 							</ImagedContainer>
+						) : (
+							<Loading>
+								<LoadingIcons.Circles className='m-auto' />
+							</Loading>
 						)}
 					</InnerPanel>
 				</RightSector>

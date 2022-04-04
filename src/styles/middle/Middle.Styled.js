@@ -29,7 +29,7 @@ export const LandingSection = styled.div`
         flex-row
     `};
 	background-image: url(${BackgroundImage}),
-		linear-gradient(to left, #005b9c, #b1d1b148);
+		linear-gradient(to bottom, #005b9c, #b1d1b148);
 	background-size: cover;
 	background-position: bottom 10% left;
 	background-blend-mode: overlay;
@@ -38,11 +38,11 @@ export const LandingSection = styled.div`
 
 export const LeftSector = styled.div`
 	${tw`
-        h-full
+        height[900px]
         flex
+        ml-12
         flex-col
-        w-2/4
-        bg-red-400
+        width[800px]
     `}
 `;
 export const Inputs = styled.div`
@@ -50,9 +50,8 @@ export const Inputs = styled.div`
         h-20
         w-11/12
         flex
-        align-items[flex-end]
-        ml-16
-        bg-blue-400
+        align-items[flex-start]
+        ml-12
     `}
 `;
 
@@ -69,8 +68,9 @@ export const DateInput = styled.input`
 
 	${tw`
         rounded-2xl
-        h-10
-        w-5/12
+        h-12
+        mt-10
+        width[285px]
         mx-5
         self-center
         text-center
@@ -80,8 +80,12 @@ export const DateInput = styled.input`
 
 export const Label = styled.label`
 	${tw`
-        h-10
-        mt-4
+        h-12
+        w-11
+        mt-12
+        text-white
+        font-size[26px]
+        font-family[Verdana, Geneva, Tahoma, sans-serif]
         self-center
         
     `}
@@ -90,9 +94,9 @@ export const Label = styled.label`
 export const SelectInput = styled.select`
 	${tw`
     rounded-2xl
-    h-10
-    w-5/12
-    mx-5
+    h-12
+    mt-10
+    w-11/12
     self-center
 `};
 `;
@@ -105,28 +109,45 @@ export const OptionSelect = styled.option`
     `}
 `;
 export const CarouselWraper = styled.div`
+	-webkit-box-shadow: #FFF 0 -1px 4px, #ff0 0 -2px 10px, #ff8000 0 -10px 20px, -34px 16px 43px -25px rgba(0,0,0,0); 
+    box-shadow: #FFF 0 -1px 4px, #ff0 0 -2px 10px, #ff8000 0 -10px 20px, -34px 16px 43px -25px rgba(0,0,0,0);
+		red 0 -18px 40px, -34px 16px 43px -25px rgba(0, 0, 0, 0);
 	${tw`
-        h-full
-        w-full
-        bg-purple-400
+        ${'' /* height[680px] */}
+        h-screen
+        flex
+        mt-10
+        ml-6
+        bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500/80
+        rounded-2xl
+        
+        drop-shadow-2xl
     `}
 `;
 export const RightSector = styled.div`
 	${tw`
         h-full
-        w-2/4
-        bg-green-400
-    `}
+        w-full
+    `};
 `;
 
 export const InnerPanel = styled.div`
+	::-webkit-scrollbar {
+		display: none;
+	}
+	-webkit-box-shadow: #fff 0 -1px 4px, #ff0 0 -2px 10px, #ff8000 0 -10px 20px,
+		-34px 16px 43px -25px rgba(0, 0, 0, 0);
+	box-shadow: #fff 0 -1px 4px, #ff0 0 -2px 10px, #ff8000 0 -10px 20px,
+		-34px 16px 43px -25px rgba(0, 0, 0, 0);
 	${tw`
         right-2/4
-        h-5/6
-        m-14
-        rounded-l-lg
-        overflow-y-scroll
-        bg-red-400
+        height[92%]
+        width[92%]
+        m-9
+        overflow-auto
+        rounded-2xl
+        bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500/60
+        
     `}
 `;
 
@@ -138,14 +159,16 @@ export const NotFound = tw.h1`
 `;
 export const Loading = tw.h1`
     text-6xl 
-    text-center 
-    mx-auto 
-    mt-32
+ 
+    flex
+    h-screen
+
 `;
 
 export const ImagedContainer = tw.div`
     grid 
-    grid-cols-2 
+    grid-cols-3
     gap-4 
     m-4
+  
 `;

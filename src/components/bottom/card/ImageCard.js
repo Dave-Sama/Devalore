@@ -1,36 +1,61 @@
+// React:
 import React from 'react';
 
-export default function ImageCard({ image }) {
+// Styles:
+import {
+	ImageContainer,
+	Image,
+	InformationSection,
+	Name,
+	Rating,
+	TagsContainer,
+	Tags,
+} from '../../../styles/middle/ImageCard.Styled';
+import { AiFillStar } from 'react-icons/ai';
+
+export default function ImageCard({ image, name, date }) {
 	const tags = image.tags.split(',');
+	
+	const ratingStars = () => {
+		let stars = 0;
+		if (0 < image.likes && image.likes < 20) {
+			stars = 2;
+		} else if (20 <= image.likes && image.likes < 40) {
+			stars = 3;
+		} else if (40 <= image.likes && image.likes < 60) {
+			stars = 4;
+		} else if (60 <= image.likes) {
+			stars = 5;
+		}
+		return Array(stars)
+			.fill(0)
+			.map((el, index) => (
+				<AiFillStar className='text-amber-500 border-red-400' key={index} />
+			));
+	};
+
 	return (
-		<div className='max-w-sm rounded overflow-hidden shadow-lg'>
-			<img src={image.webformatURL} alt='connection error' className='w-full' />
-			<div className='px-6 py-4'>
-				<div className='font-bold text-purple-500 text-xl mb-2'>
-					Photo By {image.user}
-				</div>
+		<ImageContainer>
+			<Image src={image.webformatURL} alt='connection error' />
+			<InformationSection>
+				<Name>{name}</Name>
 				<ul>
+					<li>
+						<strong>Date:</strong> {date}
+					</li>
 					<li>
 						<strong>Views:</strong> {image.views}
 					</li>
-					<li>
-						<strong>Downloads:</strong> {image.downloads}
-					</li>
-					<li>
-						<strong>Likes:</strong> {image.likes}
-					</li>
+					<Rating>
+						<strong>Rating:</strong> {ratingStars()}
+					</Rating>
 				</ul>
-			</div>
-			<div className='text-center px-6 py-4'>
+			</InformationSection>
+			<TagsContainer>
 				{tags.map((tag, index) => (
-					<span
-						key={index}
-						className='inline-block bg-gray-200 rounded-full px-3 py-1 my-1 text-sm font-semibold text-gray-7000 mr-2 '
-					>
-						#{tag}
-					</span>
+					<Tags key={index}>#{tag}</Tags>
 				))}
-			</div>
-		</div>
+			</TagsContainer>
+		</ImageContainer>
 	);
 }
