@@ -11,7 +11,6 @@ export const NavContainer = styled.div`
         pr-6 
         pt-4 
         border-b-2 
-        border-gray-200 
         border-opacity-50 
         items-center 
         self-center

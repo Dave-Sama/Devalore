@@ -11,7 +11,7 @@ function InfoSection() {
 		<InfoSectionContainer>
 			<FloatingText>
 				<OutlinedTextSvg viewBox='0 0 530 100'>
-					<text>EXPLORE</text>
+					<text>JOIN</text>
 				</OutlinedTextSvg>
 			</FloatingText>
 			<FloatingText>
@@ -21,12 +21,11 @@ function InfoSection() {
 			</FloatingText>
 			<FloatingText>
 				<OutlinedTextSvg viewBox='0 0 530 100'>
-					<text>WORLD</text>
+					<text>GREATEST</text>
 				</OutlinedTextSvg>
 			</FloatingText>
 			<DescriptionText>
-				Let's explore the most beautiful countries in the world, Come and travel
-				with us, make your dream come true.
+				We're a team of a passionate people that strive to be the best, will you join us?
 			</DescriptionText>
 		</InfoSectionContainer>
 	);

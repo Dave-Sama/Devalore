@@ -1,6 +1,5 @@
 import Top from './components/top/top';
 import tw from 'twin.macro';
-import BottomContainer from './components/bottom/BottomContainer';
 import Middle from './components/middle/Middle';
 
 const AppContainer = tw.div`
@@ -16,7 +15,6 @@ function App() {
 		<AppContainer>
 			<Top />
 			<Middle />
-			<BottomContainer />
 		</AppContainer>
 	);
 }

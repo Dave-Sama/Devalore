@@ -1,141 +1,206 @@
 // React:
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 // Style:
 import {
-	MiddleContainer,
+	SectionInfo,
+	Title,
+	ExploreSectionContainer,
+	Input,
+	InputsWrapper,
+	Button,
+	ButtonWrapper,
 	LandingSection,
-	InnerPanel,
-	RightSector,
-	CarouselWraper,
-	OptionSelect,
-	SelectInput,
-	Label,
-	DateInput,
-	Inputs,
-	LeftSector,
-	NotFound,
-	Loading,
-	ImagedContainer,
+	TextArea,
+	CheckBox,
+	CheckBoxContainer,
+	Select,
 } from '../../styles/middle/Middle.Styled';
 
-// Components:
-import ResponsiveCarousel from './carousel/Carousel';
-import ArrowButton from '../reusable/ArrowButton';
-import ImageCard from '../bottom/card/ImageCard';
+// Redux:
+import { useDispatch, useSelector } from 'react-redux';
+import {
+	setName,
+	setAge,
+	setPetName,
+	setPetType,
+	setTextarea,
+	setCheckBox,
+} from '../../redux/SignUp';
 
-// Static:
-import { country_list } from '../../countries';
-
-// apis:
-import _ from 'lodash';
-import Axios from 'axios';
-import LoadingIcons from 'react-loading-icons';
+// Apis:
+import Swal from 'sweetalert2';
 
 function Middle() {
-	const [search, setSearch] = useState('');
-	const [date, setDate] = useState(new Date());
-	const [images, setImages] = useState([]);
-	const [isLoading, setIsLoading] = useState(true);
-	const [isCountryExist, setIsCountryExist] = useState(false);
-	const [isDateExists, setIsDateExist] = useState(false);
-	const [isUp, setIsUp] = useState(false);
+	const [step, setStep] = useState('1');
+	const [firstStep, setFirstStep] = useState(true);
+	const [secondStep, setSecondStep] = useState(false);
+	const [thirdStep, setThirdStep] = useState(false);
+	// get from redux + dispatch func:
+	const { name, age, petName, petType, textareaInfo, checkBox } = useSelector(
+		(state) => state.image
+	);
+	const dispatch = useDispatch();
 
-	useEffect(() => {
-		country_list.includes(_.capitalize(search)) &&
-			fetch(
-				`https://pixabay.com/api/?key=${process.env.REACT_APP_PIXABAY_API_KEY}&q=${search}&image_type=photo&pretty=true
-      `
-			)
-				.then((res) => res.json())
-				.then((data) => {
-					setImages(data.hits);
-					setIsLoading(false);
-					setIsUp(true);
-				})
-				.catch((err) => console.log(err));
-	}, [search]);
+	const finish = () => {
+		Swal.fire({
+			icon: 'success',
+			title: 'Thank you!',
+		});
+	};
+	const errorMsg = (errwith) => {
+		Swal.fire({
+			icon: 'error',
+			title: 'Oops...',
+			text:
+				errwith !== 'Fill Inputs'
+					? `Wrong input in ${errwith}`
+					: ' Incorrect data ',
+		});
 
-	const onCountryCange = (e) => {
-		e.preventDefault();
-		setSearch(e.target.value);
-		setIsCountryExist(true);
+		switch (errwith) {
+			case 'User Name':
+				dispatch(setName(''));
+				break;
+			case 'Pet Name':
+				dispatch(setPetName(''));
+			case 'Pet Type':
+				dispatch(setPetType(''));
+
+			default:
+				break;
+		}
 	};
 
-	const onDateChange = (e) => {
-		e.preventDefault();
-		setDate(e.target.value);
-		setIsDateExist(true);
+	const checkNumbersInString = (num) => {
+		// Regex:
+		let hasNumber = /\d/;
+		return hasNumber.test(num);
+	};
+
+	const StepInputs = (step) => {
+		switch (step) {
+			case '1':
+				return (
+					<>
+						<InputsWrapper>
+							<Input
+								value={name}
+								onChange={(e) => onNameChange(e.target.value)}
+								placeholder=' Enter Name'
+							/>
+							<Input
+								value={age}
+								min='0'
+								max='100'
+								placeholder='Enter Age'
+								type='number'
+								onChange={(e) => dispatch(setAge(e.target.value))}
+							/>
+						</InputsWrapper>
+						<ButtonWrapper>
+							<Button onClick={onSubmitFirst}>Submit</Button>
+						</ButtonWrapper>
+					</>
+				);
+			case '2':
+				return (
+					<>
+						<InputsWrapper>
+							<Input
+								value={petName}
+								onChange={(e) => onPetNameChange(e.target.value)}
+								placeholder=' Enter Pet Name'
+							/>
+							<Select
+								name='cars'
+								id='cars'
+								value={petType}
+								onChange={(e) => onPetTypeChange(e.target.value)}
+							>
+								<option value='dog'>Dog</option>
+								<option value='cat'>Cat</option>
+								<option value='horse'>Horse</option>
+								<option value='other'>Other</option>
+							</Select>
+						</InputsWrapper>
+						<ButtonWrapper>
+							<Button onClick={onSubmitSecond}>Submit</Button>
+							<Button onClick={(e) => setStep('1')}>Previous</Button>
+						</ButtonWrapper>
+					</>
+				);
+			case '3':
+				return (
+					<>
+						<InputsWrapper>
+							<TextArea
+								value={textareaInfo}
+								rows='10'
+								placeholder='Your message'
+								onChange={(e) => dispatch(setTextarea(e.target.value))}
+							/>
+							<CheckBoxContainer>
+								<label className='w-1/3 mb-4 text-white'>
+									Agree All Terms:
+								</label>
+								<CheckBox
+									type='checkbox'
+									value={checkBox}
+									onChange={(e) => dispatch(setCheckBox(e.target.value))}
+								/>
+							</CheckBoxContainer>
+						</InputsWrapper>
+						<ButtonWrapper>
+							<Button onClick={onSubmitThird}>Submit</Button>
+							<Button onClick={(e) => setStep('1')}>Previous</Button>
+						</ButtonWrapper>
+					</>
+				);
+			default:
+				break;
+		}
+	};
+
+	const onNameChange = (value) => {
+		checkNumbersInString(value)
+			? errorMsg('User Name')
+			: dispatch(setName(value));
+	};
+	const onPetNameChange = (value) => {
+		checkNumbersInString(value)
+			? errorMsg('Pet Name')
+			: dispatch(setPetName(value));
+	};
+	const onPetTypeChange = (value) => {
+		checkNumbersInString(value)
+			? errorMsg('Pet Type')
+			: dispatch(setPetType(value));
+	};
+
+	const onSubmitFirst = () => {
+		name === '' || (age === 0 && errorMsg('Fill Inputs'));
+		console.log(name, age);
+		setStep('2');
+	};
+	const onSubmitSecond = () => {
+		petName === '' || (petType === '' && errorMsg('Fill Inputs'));
+		setStep('3');
+	};
+	const onSubmitThird = () => {
+		textareaInfo === '' || (!checkBox && errorMsg('Fill Inputs'));
+		finish();
 	};
 
 	return (
-		<MiddleContainer name='Explore'>
+		<ExploreSectionContainer name='SignIn'>
 			<LandingSection>
-				<ArrowButton direction={'up'} section={'Home'} whoAmI={'Explore'} />
-				<LeftSector>
-					<Inputs>
-						<SelectInput
-							onChange={onCountryCange}
-							name='countries'
-							id='countries'
-						>
-							{country_list.map((city, index) => (
-								<OptionSelect key={index} value={city}>
-									{city}
-								</OptionSelect>
-							))}
-						</SelectInput>
-						{
-							<DateInput
-								type='date'
-								id='date'
-								name='date'
-								onChange={onDateChange}
-							/>
-						}
-					</Inputs>
-					{isCountryExist ? (
-						<CarouselWraper>
-							<ResponsiveCarousel images={images} />
-						</CarouselWraper>
-					) : (
-						<CarouselWraper>
-							<LoadingIcons.Circles className='m-auto' />
-						</CarouselWraper>
-					)}
-					<Inputs>
-						<ArrowButton
-							direction={'down'}
-							section={'ContactUs'}
-							whoAmI={'Explore'}
-						/>
-					</Inputs>
-				</LeftSector>
-				<RightSector>
-					<InnerPanel>
-						{!isLoading && images.length === 0 && (
-							<NotFound>No Images Found...</NotFound>
-						)}
-						{isCountryExist && isDateExists ? (
-							<ImagedContainer>
-								{images.slice(0, 12).map((image, index) => (
-									<ImageCard
-										key={index}
-										image={image}
-										name={search}
-										date={date}
-									/>
-								))}
-							</ImagedContainer>
-						) : (
-							<Loading>
-								<LoadingIcons.Circles className='m-auto' />
-							</Loading>
-						)}
-					</InnerPanel>
-				</RightSector>
+				<SectionInfo>
+					<Title>Personal Info</Title>
+					{firstStep && StepInputs(step)}
+				</SectionInfo>
 			</LandingSection>
-		</MiddleContainer>
+		</ExploreSectionContainer>
 	);
 }
 
