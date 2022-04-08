@@ -38,8 +38,9 @@ function Middle() {
 	const [thirdStep, setThirdStep] = useState(false);
 	// get from redux + dispatch func:
 	const { name, age, petName, petType, textareaInfo, checkBox } = useSelector(
-		(state) => state.image
+		(state) => state.signUp
 	);
+
 	const dispatch = useDispatch();
 
 	const finish = () => {
@@ -171,25 +172,25 @@ function Middle() {
 		checkNumbersInString(value)
 			? errorMsg('Pet Name')
 			: dispatch(setPetName(value));
+		console.log('pet name: ', petName);
 	};
 	const onPetTypeChange = (value) => {
 		checkNumbersInString(value)
 			? errorMsg('Pet Type')
 			: dispatch(setPetType(value));
+		console.log('pet name: ', petType);
 	};
 
 	const onSubmitFirst = () => {
-		name === '' || (age === 0 && errorMsg('Fill Inputs'));
-		console.log(name, age);
-		setStep('2');
+		name === '' || age === 0 ? errorMsg('Fill Inputs') : setStep('2');
+		console.log(`name: `, name, 'Age: ', age);
 	};
 	const onSubmitSecond = () => {
-		petName === '' || (petType === '' && errorMsg('Fill Inputs'));
-		setStep('3');
+		petName === '' || petType === '' ? errorMsg('Fill Inputs') : setStep('3');
+		console.log(`pet name: `, petName, 'type: ', petType);
 	};
 	const onSubmitThird = () => {
-		textareaInfo === '' || (!checkBox && errorMsg('Fill Inputs'));
-		finish();
+		textareaInfo === '' || !checkBox ? errorMsg('Fill Inputs') : finish();
 	};
 
 	return (

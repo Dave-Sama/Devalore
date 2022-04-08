@@ -3,6 +3,6 @@ import signUpReducer from '../redux/SignUp';
 
 export const store = configureStore({
 	reducer: {
-		image: signUpReducer,
+		signUp: signUpReducer,
 	},
 });
